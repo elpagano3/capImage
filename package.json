@@ -1,0 +1,15 @@
+{
+  "name": "capImage",
+  "subdomain": "elpagano3.capimage",
+  "scripts": {
+    "start": "app.js"
+  },
+  "version": "0.0.1",
+  "engines": {
+    "node": "0.8.x"
+  },
+  "dependencies": {
+    "express": "*",
+    "socket.io": "*"
+  }
+}

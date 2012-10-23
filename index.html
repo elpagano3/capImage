@@ -1,0 +1,33 @@
+<!doctype html>
+<head>
+<script src="socket.io/socket.io.js"></script>
+<script>
+var socket = new io.connect();
+
+socket.on('connect', function(){
+  socket.emit('init_index', 1);
+  socket.on('mensaje', function(data){
+    if (data==1){console.log('Connected!');}
+    else{console.log('Not connected');}
+  });
+
+  socket.on('base', function(data){
+    console.log(data);
+
+     var showImage = document.getElementById('showImage');
+      showImage.style.display = 'block';
+
+      // Show the captured photo captured by the movil camera
+      showImage.src = "data:image/jpeg;base64," + data;
+  });
+
+});
+
+</script>
+
+</head>
+<body>
+  <img style="display:none;width:500px;height:350px;" id="showImage" src="" />
+  <p id="data"></p>
+</body>
+</html>
