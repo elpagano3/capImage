@@ -16,12 +16,8 @@ app.get('/camera.html', function(req, res){
   res.sendfile(__dirname + '/camera.html');
 });
 
-app.get('/controller.html', function(req, res){
-  res.sendfile(__dirname + '/controller.html');
-});
-
-app.get('/cordova-android.js', function(req, res){
-  res.sendfile(__dirname + '/cordova-android.js');
+app.get('/cordova-2.0.0.js', function(req, res){
+  res.sendfile(__dirname + '/cordova-2.0.0.js');
 });
 
 //Websockets
