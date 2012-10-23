@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Camera</title>
+
+    <script type="text/javascript" charset="utf-8" src="js/lib/cordova-2.0.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    function goto(){
+    	var address = document.getElementById("address").value;
+    
+    	if(confirm(address)){
+   	    	navigator.app.loadUrl(address);
+   	    }
+    }
+    </script>
+  </head>
+  <body>
+    <form onsubmit="javascript: goto();">
+    	<input type="text" id="address" name="address" />
+    	<input type="submit" />
+    </form>
+  </body>
+</html>
