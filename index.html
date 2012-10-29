@@ -1,5 +1,6 @@
 <!doctype html>
 <head>
+<title>FotoNow</title>
 <script src="socket.io/socket.io.js"></script>
 <script>
 var socket = new io.connect();
@@ -11,14 +12,20 @@ socket.on('connect', function(){
     else{console.log('Not connected');}
   });
 
+  //Receiving image data
   socket.on('base', function(data){
-    console.log(data);
+     //console.log(data);
 
      var showImage = document.getElementById('showImage');
-      showImage.style.display = 'block';
+     showImage.style.display = 'block';
 
-      // Show the captured photo captured by the movil camera
-      showImage.src = "data:image/jpeg;base64," + data;
+      // Show the captured photo by the movil camera
+     showImage.src = "data:image/jpeg;base64," + data;
+  });
+
+  //Receiving geolocation
+  socket.on('geo', function(latitude, longitude, timestamp){
+    console.log(latitude + ' <> ' + longitude + ' <> ' +  timestamp);
   });
 
 });
@@ -27,7 +34,7 @@ socket.on('connect', function(){
 
 </head>
 <body>
-  <img style="display:none;width:500px;height:350px;" id="showImage" src="" />
-  <p id="data"></p>
+  <img style="display:none;width:500px;height:400px;" id="showImage" src="" />
+  <p id="geolocation"></p>
 </body>
 </html>

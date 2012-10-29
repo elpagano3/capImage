@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Capture Image</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes;" />
 
     <!-- Styles-->
    
@@ -15,7 +15,6 @@
     var destinationType; // sets the format of returned value 
 
     // Wait for Cordova to connect with the device
-    //
     document.addEventListener("deviceready",onDeviceReady,false);
 
     //Emitimos mensaje de conexion success
@@ -25,40 +24,32 @@
       socket.emit('init_app', 1);
     });
 
-
     // Cordova is ready to be used!
-    //
     function onDeviceReady() {
         pictureSource=navigator.camera.PictureSourceType;
         destinationType=navigator.camera.DestinationType;
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
     }
 
     // Called when a photo is successfully retrieved
-    //
     function onPhotoDataSuccess(imageData) {
+
       // Uncomment to view the base64 encoded image data
-      var data= imageData + "<--That was the imageData"
-      console.log("This the imageData " + imageData);
       socket.emit('imageData', imageData);
 
       // Get image handle
-      //
       var smallImage = document.getElementById('smallImage');
 
       // Unhide image elements
-      //
       smallImage.style.display = 'block';
 
       // Show the captured photo
       // The inline CSS rules are used to resize the image
-      //
       smallImage.src = "data:image/jpeg;base64," + imageData;
-
       
     }
 
     // A button will call this function
-    //
     function capturePhoto() {
       // Take picture using device camera and retrieve image as base64-encoded string
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
@@ -66,16 +57,39 @@
     }
 
     // Called if something bad happens.
-    // 
     function onFail(message) {
       alert('Failed because: ' + message);
+    }
+
+    // onsucess Geolocation
+    function onSuccess(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var timestamp = position.timestamp;
+        var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '           + latitude              + '<br />' +
+                            'Longitude: '          + longitude             + '<br />' +
+                            'Altitude: '           + position.coords.altitude              + '<br />' +
+                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                            'Heading: '            + position.coords.heading               + '<br />' +
+                            'Speed: '              + position.coords.speed                 + '<br />' +
+                            'Timestamp: '          + timestamp          + '<br />';
+        //Send this data to server
+        socket.emit('geolocation', latitude, longitude, timestamp);
+    }
+
+     // onError Callback receives a PositionError object
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+                'message: ' + error.message + '\n');
     }
 
     </script>
   </head>
   <body>
     <button onclick="capturePhoto();">Capture Photo</button> <br>
-    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
-    <p id="parrafo"></P>
+    <img style="display:none;width:200px;height:200px;" id="smallImage" src="" />
+    <p id="geolocation">Posicion:</p>
   </body>
 </html>
