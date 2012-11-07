@@ -40,6 +40,7 @@
       // Get image handle
       var smallImage = document.getElementById('smallImage');
 
+
       // Unhide image elements
       smallImage.style.display = 'block';
 
@@ -69,11 +70,6 @@
         var element = document.getElementById('geolocation');
         element.innerHTML = 'Latitude: '           + latitude              + '<br />' +
                             'Longitude: '          + longitude             + '<br />' +
-                            'Altitude: '           + position.coords.altitude              + '<br />' +
-                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
-                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-                            'Heading: '            + position.coords.heading               + '<br />' +
-                            'Speed: '              + position.coords.speed                 + '<br />' +
                             'Timestamp: '          + timestamp          + '<br />';
         //Send this data to server
         socket.emit('geolocation', latitude, longitude, timestamp);
@@ -85,11 +81,12 @@
                 'message: ' + error.message + '\n');
     }
 
+
     </script>
   </head>
   <body>
     <button onclick="capturePhoto();">Capture Photo</button> <br>
     <img style="display:none;width:200px;height:200px;" id="smallImage" src="" />
-    <p id="geolocation">Posicion:</p>
+    </br><p id="geolocation">Geolocalizando..</p>
   </body>
 </html>

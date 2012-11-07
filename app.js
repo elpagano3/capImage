@@ -2,10 +2,11 @@ var http = require('http');
 var express = require('express');
 var socket = require('socket.io');
 
+_PORT=8080;
 var app = express();
 
-var server = http.createServer(app).listen((8080), function(){
-  console.log("Server on http://localhost:8080");
+var server = http.createServer(app).listen(( _PORT), function(){
+  console.log("Server on http://localhost:" + _PORT);
 });
 
 app.get('/', function(req, res){
@@ -18,6 +19,11 @@ app.get('/camera.html', function(req, res){
 
 app.get('/cordova-2.0.0.js', function(req, res){
   res.sendfile(__dirname + '/cordova-2.0.0.js');
+});
+
+app.get('/', function(request, response){
+
+    console.log(request.body.name);
 });
 
 //Websockets
